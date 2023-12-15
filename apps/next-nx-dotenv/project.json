@@ -1,0 +1,58 @@
+{
+  "name": "next-nx-dotenv",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/next-nx-dotenv",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/next-nx-dotenv"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/next-nx-dotenv"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "next-nx-dotenv:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "next-nx-dotenv:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "next-nx-dotenv:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "next-nx-dotenv:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/next-nx-dotenv/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
